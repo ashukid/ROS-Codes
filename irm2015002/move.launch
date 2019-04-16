@@ -1,0 +1,47 @@
+<launch>
+
+  <node pkg="rosaria" name="r1" type="RosAria"> 
+    <param name="port" value="localhost:8101" />
+    <param name="odom_frame" value="r1_odom" />
+    <param name="base_link_frame" value="r1_base_link" />
+  </node>
+    <node pkg="rosaria" name="r2" type="RosAria"> 
+    <param name="port" value="localhost:8102" />
+    <param name="odom_frame" value="r2_odom" />
+    <param name="base_link_frame" value="r2_base_link" />
+  </node>
+  <node pkg="rosaria" name="r3" type="RosAria"> 
+    <param name="port" value="localhost:8103" />
+    <param name="odom_frame" value="r3_odom" />
+    <param name="base_link_frame" value="r3_base_link" />
+  </node>
+  <node pkg="rosaria" name="r4" type="RosAria"> 
+    <param name="port" value="localhost:8104" />
+    <param name="odom_frame" value="r4_odom" />
+    <param name="base_link_frame" value="r4_base_link" />
+  </node>
+
+
+  <node pkg="tf" type="static_transform_publisher" name="W_r1" args="0 0 0 0 0 0 world r1_odom 100" />
+  <node pkg="tf" type="static_transform_publisher" name="W_r2" args="10 0 0 0 0 0 world r2_odom 100" />
+  <node pkg="tf" type="static_transform_publisher" name="W_r3" args="10 -10 0 0 0 0 world r3_odom 100" />
+  <node pkg="tf" type="static_transform_publisher" name="W_r4" args="0 -10 0 0 0 0 world r4_odom 100" />
+
+  <node pkg="irm2015002" name="move1" type="first.py"> 
+    <remap from="/RosAria/pose" to="/r1/pose" />
+	  <remap from="/RosAria/cmd_vel" to="/r1/cmd_vel" />
+  </node>
+  <node pkg="irm2015002" name="move2" type="second.py">
+    <remap from="/RosAria/pose" to="/r2/pose" />
+	  <remap from="/RosAria/cmd_vel" to="/r2/cmd_vel" />
+  </node>
+  <node pkg="irm2015002" name="move3" type="third.py">
+    <remap from="/RosAria/pose" to="/r3/pose" /> 
+	  <remap from="/RosAria/cmd_vel" to="/r3/cmd_vel" />
+  </node>
+  <node pkg="irm2015002" name="move4" type="fourth.py"> 
+    <remap from="/RosAria/pose" to="/r4/pose" />
+	  <remap from="/RosAria/cmd_vel" to="/r4/cmd_vel" />
+  </node>
+
+</launch>
